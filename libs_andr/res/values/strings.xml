@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Counters</string>
+    <string name="electricity">Electricity</string>
+    <string name="date">Date</string>
+    <string name="value">Value</string>
+    <string name="diff">Difference</string>
+    <string name="measurement_date">Measurement Date</string>
+    <string name="insert_record">Insert Record</string>
+    <string name="show_graph">Show Graph</string>
+    <string name="delete">Delete</string>
+    <string name="meters">Meters</string>
+    <string name="months">months</string>
+    <string name="all_records">All records</string>
+    <string name="not_enough_records">Please, add more records to build the graph</string>
+    <string name="not_valid_value">Not valid value. Should contain only numbers</string>
+    <string name="enable_notification">Enable Notification</string>
+    <string name="notifications">Notifications</string>
+    <string name="currency">Currency</string>
+</resources>

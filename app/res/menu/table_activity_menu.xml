@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/add_row_button"
+            android:icon="@drawable/ic_menu_add"
+            android:showAsAction="always"
+            android:title="@string/insert_record">
+    </item>
+
+    <item
+            android:id="@+id/show_graph_button"
+            android:icon="@drawable/ic_graph"
+            android:showAsAction="always"
+            android:title="@string/show_graph">
+    </item>
+</menu>
