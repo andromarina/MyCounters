@@ -47,7 +47,7 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
         item.setOnLongClickListener(this);
         item.setTag(record);
         TextView dateTV = (TextView) item.findViewById(R.id.date);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
         String formattedDate = sdf.format(record.getDate());
         dateTV.setText(formattedDate);
         dateTV.setOnClickListener(this);

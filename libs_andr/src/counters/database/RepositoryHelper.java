@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import model.Category;
 import model.Record;
+import model.TariffRange;
 
 import java.util.ArrayList;
 
@@ -78,6 +79,64 @@ public class RepositoryHelper {
         try {
             String where = Contracts.Records._ID + "=" + record.getId();
             return db.delete(Contracts.Records.TABLE_NAME, where, null);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            db.close();
+            return -1;
+        }
+    }
+
+    public long insertTariffRange(TariffRange range, int categoryId) {
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(Contracts.Tariffs.COLUMN_CATEGORY_ID, categoryId);
+            cv.put(Contracts.Tariffs.COLUMN_MIN, range.getMin());
+            cv.put(Contracts.Tariffs.COLUMN_MAX, range.getMax());
+            cv.put(Contracts.Tariffs.COLUMN_PRICE, range.getPrice());
+            return db.insertOrThrow(Contracts.Tariffs.TABLE_NAME, null, cv);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            db.close();
+            return -2;
+        }
+    }
+
+    public ArrayList<TariffRange> getRangesByCategoryId(int categoryId) {
+        ArrayList<TariffRange> ranges = new ArrayList<TariffRange>();
+
+        String selection = Contracts.Tariffs.COLUMN_CATEGORY_ID + "=" + categoryId;
+        Cursor c = db.query(Contracts.Tariffs.TABLE_NAME, null, selection, null, null, null,
+                Contracts.Tariffs._ID + " ASC");
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int id = c.getInt(0);
+            int min = c.getInt(1);
+            int max = c.getInt(2);
+            double price = c.getDouble(3);
+            TariffRange range = new TariffRange(id, min, max, price);
+            ranges.add(range);
+        }
+        c.close();
+        return ranges;
+    }
+
+//    public int updateTariffRange(TariffRange range) {
+//
+//        ContentValues cv = new ContentValues();
+//        cv.put(Contracts.Tariffs.COLUMN_MIN, range.getMin());
+//        cv.put(Contracts.Tariffs.COLUMN_MAX, range.getMax());
+//        cv.put(Contracts.Tariffs.COLUMN_PRICE, range.getPrice());
+//        String selection = Contracts.Tariffs._ID + " LIKE ?";
+//        String[] selectionArgs = { String.valueOf(range.getId()) };
+//
+//        return db.update(Contracts.Tariffs.TABLE_NAME,cv,selection,selectionArgs);
+//    }
+
+    public int deleteTariffRangesByCategoryId (int categoryId) {
+        try {
+            String where = Contracts.Tariffs.COLUMN_CATEGORY_ID + "=" + categoryId;
+            return db.delete(Contracts.Tariffs.TABLE_NAME, where, null);
         }
         catch (Exception ex) {
             ex.printStackTrace();

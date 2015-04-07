@@ -15,6 +15,7 @@ public class Record implements Comparable<Record> {
     private int value;
     private int diff = 0;
     private int apartmentId = 1;
+    private double price = 0.0;
     private ArrayList<PropertyChangedListener> listeners = new ArrayList<PropertyChangedListener>();
 
     public Record(int id, Date date, int value, int categoryId) {
@@ -73,8 +74,17 @@ public class Record implements Comparable<Record> {
         notifyAllListeners();
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+        notifyAllListeners();
+    }
+
     public int getDiff() {
         return this.diff;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public void setDate(Date recordDate) {

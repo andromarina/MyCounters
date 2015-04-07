@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by mara on 1/29/15.
  */
-public class DifferenceCalculator {
+public class Calculator {
 
     public static void recalculateDiff(ArrayList<Record> input) {
         if(input == null || input.size() == 0 || input.size() == 1){

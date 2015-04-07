@@ -19,6 +19,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Counters.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INT_TYPE = " INTEGER";
+    private static final String REAL_TYPE = " REAL";
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_CATEGORIES_TABLE =
             "CREATE TABLE " + Contracts.Categories.TABLE_NAME + " (" +
@@ -35,6 +36,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     Contracts.Records.COLUMN_APARTMENT_ID + INT_TYPE + COMMA_SEP +
                     Contracts.Records.COLUMN_DATE + INT_TYPE + COMMA_SEP +
                     Contracts.Records.COLUMN_VALUE + INT_TYPE +" )";
+    private static final String SQL_CREATE_TARIFFS_TABLE =
+            "CREATE TABLE " + Contracts.Tariffs.TABLE_NAME + " (" +
+                    Contracts.Tariffs._ID + " INTEGER PRIMARY KEY," +
+                    Contracts.Tariffs.COLUMN_CATEGORY_ID + INT_TYPE + COMMA_SEP +
+                    Contracts.Tariffs.COLUMN_MAX + INT_TYPE + COMMA_SEP +
+                    Contracts.Tariffs.COLUMN_MIN + INT_TYPE + COMMA_SEP +
+                    Contracts.Tariffs.COLUMN_PRICE + REAL_TYPE + COMMA_SEP + " )";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + Contracts.Categories.TABLE_NAME + COMMA_SEP + Contracts.Records.TABLE_NAME;
@@ -51,14 +59,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.d(LOG_TAG, "Create Database query SQL_CREATE_APARTMENTS_TABLE: " + SQL_CREATE_APARTMENTS_TABLE);
         db.execSQL(SQL_CREATE_RECORDS_TABLE);
         Log.d(LOG_TAG, "Create Database query SQL_CREATE_RECORDS_TABLE: " + SQL_CREATE_RECORDS_TABLE);
+        db.execSQL(SQL_CREATE_TARIFFS_TABLE);
+        Log.d(LOG_TAG, "Create Database query SQL_CREATE_TARIFFS_TABLE: " + SQL_CREATE_TARIFFS_TABLE);
 
-        //fill in categories table
+        //fill in categories table && tariffs
         HashMap<Integer, String> categories = Category.DefaultCategories();
         for(int i = 1; i <= categories.size(); ++i) {
             ContentValues values = prepareCategoryValues(i, categories.get(i));
             db.insert(Contracts.Categories.TABLE_NAME, "null", values);
+            ContentValues tariffsValues = prepareTariffsValues(i);
+            db.insert(Contracts.Tariffs.TABLE_NAME, "null", tariffsValues);
         }
-
         //fill in apartments table
         db.insert(Contracts.Apartments.TABLE_NAME, "null", prepareApartmentValues());
     }
@@ -74,6 +85,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Contracts.Categories._ID, id);
         contentValues.put(Contracts.Categories.COLUMN_CATEGORY_NAME, name);
+        return contentValues;
+    }
+
+    private ContentValues prepareTariffsValues(int categoryId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Contracts.Tariffs.COLUMN_CATEGORY_ID, categoryId);
+        contentValues.put(Contracts.Tariffs.COLUMN_PRICE, 0.0);
+        contentValues.put(Contracts.Tariffs.COLUMN_MIN, 0);
+        contentValues.put(Contracts.Tariffs.COLUMN_MAX, Integer.MAX_VALUE);
         return contentValues;
     }
 

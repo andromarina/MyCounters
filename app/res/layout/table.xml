@@ -25,6 +25,9 @@
         <TextView style="@style/Cell.Header"
                   android:text="@string/diff" android:id="@+id/diff_header" android:layout_weight="1" android:layout_width="match_parent"
                   android:layout_height="match_parent" android:gravity="center"/>
+        <TextView style="@style/Cell.Header" android:text="@string/price" android:id="@+id/price_header"
+                  android:layout_weight="1" android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:gravity="center"/>
 
     </LinearLayout>
     <ListView

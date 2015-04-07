@@ -16,6 +16,7 @@ import java.util.*;
 public class Repository implements IRepository{
     private RepositoryHelper helper;
     private Map<Integer, ArrayList<Record>> recordsCollections = new HashMap<Integer, ArrayList<Record>>();
+    private Map<Integer, Tariff> tariffsCollection = new HashMap<Integer, Tariff>();
     private ArrayList<CollectionChangedListener> listeners = new ArrayList<CollectionChangedListener>();
     private IFilter filter;
 
@@ -138,6 +139,28 @@ public class Repository implements IRepository{
         notifyAllFilterChanged();
     }
 
+    public Tariff getTariff (int categoryId)
+    {
+        if(tariffsCollection.containsValue(categoryId)) {
+            return tariffsCollection.get(categoryId);
+        }
+        Tariff tariff = new Tariff(categoryId);
+        ArrayList<TariffRange> ranges = this.helper.getRangesByCategoryId(categoryId);
+        for(TariffRange range : ranges) {
+            tariff.addTariffRange(range);
+        }
+        tariffsCollection.put(categoryId, tariff);
+        return tariff;
+    }
+
+    public void updateTariff (Tariff tariff) {
+        this.helper.deleteTariffRangesByCategoryId(tariff.getCategoryId());
+        for(TariffRange range : tariff.getRanges()) {
+            this.helper.insertTariffRange(range, tariff.getCategoryId());
+        }
+        tariffsCollection.put(tariff.getCategoryId(), tariff);
+    }
+
     private ArrayList<Record> getUnfilteredRecordsByCategoryId(int id) {
         if (recordsCollections.containsKey(id)) {
             return recordsCollections.get(id);
@@ -145,7 +168,7 @@ public class Repository implements IRepository{
         ArrayList<Record> records = this.helper.getRecordsByCategoryId(id);
         Collections.sort(records);
         records = Utils.removeRecordsForTheSameMonth(records);
-        DifferenceCalculator.recalculateDiff(records);
+        Calculator.recalculateDiff(records);
         recordsCollections.put(id, records);
         return records;
     }
@@ -165,7 +188,7 @@ public class Repository implements IRepository{
             records.add(record);
             Collections.sort(records);
             records = Utils.removeRecordsForTheSameMonth(records);
-            DifferenceCalculator.recalculateDiff(records);
+            Calculator.recalculateDiff(records);
             notifyAllRecordInserted(record);
         }
         return result;
@@ -177,7 +200,7 @@ public class Repository implements IRepository{
             ArrayList<Record> records = recordsCollections.get(record.getCategoryId());
             records.remove(record);
             Collections.sort(records);
-            DifferenceCalculator.recalculateDiff(records);
+            Calculator.recalculateDiff(records);
             notifyAllRecordDeleted(record);
         }
         return result;
@@ -187,12 +210,12 @@ public class Repository implements IRepository{
         int categoryId = record.getCategoryId();
         ArrayList<Record> records = recordsCollections.get(categoryId);
         if (!records.contains(record)) {
-            throw new RuntimeException("Trying to update not existed record!");
+            throw new RuntimeException("Trying to update not existing record!");
         }
         int result = this.helper.updateRecord(record);
         Collections.sort(records);
         records = Utils.removeRecordsForTheSameMonth(records);
-        DifferenceCalculator.recalculateDiff(records);
+        Calculator.recalculateDiff(records);
         return result;
     }
 

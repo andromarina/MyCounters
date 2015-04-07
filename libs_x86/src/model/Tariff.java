@@ -9,12 +9,10 @@ import java.util.Currency;
  */
 public class Tariff {
     private Currency currency;
-    private int id;
     private int categoryId;
     private ArrayList<TariffRange> ranges = new ArrayList<TariffRange>();
 
-    public Tariff(int id, int categoryId) {
-        this.id = id;
+    public Tariff(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -29,6 +27,10 @@ public class Tariff {
     public void addTariffRange(TariffRange range) {
         this.ranges.add(range);
         Collections.sort(this.ranges);
+    }
+
+    public ArrayList<TariffRange> getRanges() {
+        return ranges;
     }
 
     public double calculate(int difference) {
@@ -46,10 +48,6 @@ public class Tariff {
             }
         }
         return sum;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getCategoryId() {

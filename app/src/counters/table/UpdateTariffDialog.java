@@ -7,40 +7,40 @@ import android.text.InputType;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.MyCounters.R;
-import model.Record;
-
-import java.util.Date;
+import model.Tariff;
+import model.TariffRange;
 
 /**
- * Created by mara on 1/12/15.
+ * Created by mara on 4/6/15.
  */
-public class CreateRecordDialog {
+public class UpdateTariffDialog {
     private AlertDialog.Builder builder;
     private int categoryId;
-    private CloseListener closeListener;
+    private UpdateTariffDialog.CloseListener closeListener;
     private Context context;
 
-    public interface CloseListener {
-        public void OnClose(Record record);
-    }
-
-    public CreateRecordDialog(Context context, int categoryId) {
+    public UpdateTariffDialog(Context context, int categoryId, double oldValue) {
         this.categoryId = categoryId;
         this.context = context;
-        this.builder = create();
+        this.builder = create(oldValue);
+    }
+
+    public interface CloseListener {
+        public void OnClose(Tariff tariff);
     }
 
     public void setOnCloseListener(CloseListener listener) {
         this.closeListener = listener;
     }
 
-    private AlertDialog.Builder create() {
+    private AlertDialog.Builder create(double oldValue) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.meters);
+        builder.setTitle(R.string.price_per_unit);
 
         final EditText input = new EditText(context);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
+        input.setText(Double.toString(oldValue));
         builder.setView(input);
 
         builder.setPositiveButton("OK", new OnOKListener(input));
@@ -52,11 +52,14 @@ public class CreateRecordDialog {
         this.builder.show();
     }
 
-    private Record createRecord(String value, int categoryID) {
+    private Tariff createTariff(String value, int categoryID) {
         try {
-            int val = Integer.parseInt(value);
-            Record record = new Record(new Date(), val, categoryID);
-            return record;
+            double price = Double.parseDouble(value);
+            Tariff tariff = new Tariff(categoryID);
+            //TODO: only one tariff range harcoded
+            TariffRange range = new TariffRange(0, Integer.MAX_VALUE, price);
+            tariff.addTariffRange(range);
+            return tariff;
         }
         catch (NumberFormatException ex) {
             Toast.makeText(this.context, R.string.not_valid_value, Toast.LENGTH_LONG).show();
@@ -74,7 +77,7 @@ public class CreateRecordDialog {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             String value = input.getText().toString();
-            Record result = createRecord(value.replaceAll("\\s", ""), categoryId);
+            Tariff result = createTariff(value.replaceAll("\\s", ""), categoryId);
             closeListener.OnClose(result);
         }
     }
@@ -87,6 +90,4 @@ public class CreateRecordDialog {
             closeListener.OnClose(null);
         }
     }
-
-
 }

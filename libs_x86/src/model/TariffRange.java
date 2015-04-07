@@ -7,6 +7,14 @@ public class TariffRange implements Comparable<TariffRange> {
     private Integer min;
     private Integer max;
     private double price;
+    private int id;
+
+    public TariffRange(int id, int min, int max, double price) {
+        this.id = id;
+        this.min = min;
+        this.max = max;
+        this.price = price;
+    }
 
     public TariffRange(int min, int max, double price) {
         this.min = min;
@@ -24,6 +32,10 @@ public class TariffRange implements Comparable<TariffRange> {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

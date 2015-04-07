@@ -44,6 +44,8 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
         valueHeader.setTextColor(this.categoryColour);
         TextView diffHeader = (TextView) findViewById(R.id.diff_header);
         diffHeader.setTextColor(this.categoryColour);
+        TextView priceHeader = (TextView) findViewById(R.id.price_header);
+        priceHeader.setTextColor(this.categoryColour);
     }
 
     @Override
@@ -93,6 +95,9 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
                 Intent intent = new Intent(this, GraphActivity.class);
                 intent.putExtra("categoryID", new int[] {this.categoryId});
                 startActivity(intent);
+                return true;
+            case R.id.tariff_button:
+                controller.showUpdateTariffDialog();
                 return true;
         }
         return true;

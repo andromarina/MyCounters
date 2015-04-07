@@ -66,7 +66,6 @@ public class MyDataPickerDialog implements DatePickerDialog.OnDateSetListener, D
         return date;
     }
 
-
     @Override
     public void onClick(DialogInterface dialog, int which) {
         //flag is added because OnDateSet called after onDoneClick and record does not change value properly

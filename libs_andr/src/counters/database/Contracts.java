@@ -27,4 +27,12 @@ public final class Contracts {
         public static final String COLUMN_APARTMENT_ID = "apartmentid";
     }
 
+    public static abstract class Tariffs implements BaseColumns {
+        public static final String TABLE_NAME = "tariffs";
+        public static final String COLUMN_CATEGORY_ID = "categoryid";
+        public static final String COLUMN_MIN = "min";
+        public static final String COLUMN_MAX = "max";
+        public static final String COLUMN_PRICE = "price";
+    }
+
 }
