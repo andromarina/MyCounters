@@ -33,7 +33,7 @@ public class Tariff {
         return ranges;
     }
 
-    public double calculate(int difference) {
+    private double calculate(int difference) {
         double sum = 0;
         for(TariffRange range : this.ranges) {
             int threshold = range.getMax() - range.getMin();
@@ -48,6 +48,13 @@ public class Tariff {
             }
         }
         return sum;
+    }
+
+    public void calc(ArrayList<Record> input) {
+        for(Record rec : input) {
+            int diff = rec.getDiff();
+            rec.setPrice(calculate(diff));
+        }
     }
 
     public int getCategoryId() {

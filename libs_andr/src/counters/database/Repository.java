@@ -154,11 +154,13 @@ public class Repository implements IRepository{
     }
 
     public void updateTariff (Tariff tariff) {
-        this.helper.deleteTariffRangesByCategoryId(tariff.getCategoryId());
+        int categoryId = tariff.getCategoryId();
+        this.helper.deleteTariffRangesByCategoryId(categoryId);
         for(TariffRange range : tariff.getRanges()) {
-            this.helper.insertTariffRange(range, tariff.getCategoryId());
+            this.helper.insertTariffRange(range, categoryId);
         }
-        tariffsCollection.put(tariff.getCategoryId(), tariff);
+        tariffsCollection.put(categoryId, tariff);
+        tariff.calc(getRecordsByCategoryId(categoryId));
     }
 
     private ArrayList<Record> getUnfilteredRecordsByCategoryId(int id) {
@@ -169,6 +171,7 @@ public class Repository implements IRepository{
         Collections.sort(records);
         records = Utils.removeRecordsForTheSameMonth(records);
         Calculator.recalculateDiff(records);
+        getTariff(id).calc(records);
         recordsCollections.put(id, records);
         return records;
     }
@@ -189,6 +192,7 @@ public class Repository implements IRepository{
             Collections.sort(records);
             records = Utils.removeRecordsForTheSameMonth(records);
             Calculator.recalculateDiff(records);
+            getTariff(record.getCategoryId()).calc(records);
             notifyAllRecordInserted(record);
         }
         return result;
@@ -216,6 +220,7 @@ public class Repository implements IRepository{
         Collections.sort(records);
         records = Utils.removeRecordsForTheSameMonth(records);
         Calculator.recalculateDiff(records);
+        getTariff(record.getCategoryId()).calc(records);
         return result;
     }
 

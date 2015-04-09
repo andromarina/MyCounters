@@ -110,10 +110,10 @@ public class RepositoryHelper {
         Cursor c = db.query(Contracts.Tariffs.TABLE_NAME, null, selection, null, null, null,
                 Contracts.Tariffs._ID + " ASC");
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            int id = c.getInt(0);
-            int min = c.getInt(1);
-            int max = c.getInt(2);
-            double price = c.getDouble(3);
+            int id = c.getInt(c.getColumnIndex(Contracts.Tariffs._ID));
+            int min = c.getInt(c.getColumnIndex(Contracts.Tariffs.COLUMN_MIN));
+            int max = c.getInt(c.getColumnIndex(Contracts.Tariffs.COLUMN_MAX));
+            double price = c.getDouble(c.getColumnIndex(Contracts.Tariffs.COLUMN_PRICE));
             TariffRange range = new TariffRange(id, min, max, price);
             ranges.add(range);
         }

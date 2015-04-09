@@ -42,7 +42,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     Contracts.Tariffs.COLUMN_CATEGORY_ID + INT_TYPE + COMMA_SEP +
                     Contracts.Tariffs.COLUMN_MAX + INT_TYPE + COMMA_SEP +
                     Contracts.Tariffs.COLUMN_MIN + INT_TYPE + COMMA_SEP +
-                    Contracts.Tariffs.COLUMN_PRICE + REAL_TYPE + COMMA_SEP + " )";
+                    Contracts.Tariffs.COLUMN_PRICE + REAL_TYPE + " )";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + Contracts.Categories.TABLE_NAME + COMMA_SEP + Contracts.Records.TABLE_NAME;

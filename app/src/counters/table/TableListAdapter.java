@@ -69,6 +69,11 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
         TextView unit = (TextView) item.findViewById(R.id.unit);
         unit.setText(Html.fromHtml(CategoriesHelper.getUnits(this.categoryId)));
 
+        TextView price = (TextView) item.findViewById(R.id.price);
+        String priceText = String.valueOf(record.getPrice());
+        price.setText(priceText);
+        price.setTag(record);
+
         return item;
     }
 

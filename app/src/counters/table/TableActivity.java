@@ -55,6 +55,8 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
         addRowButton.setOnMenuItemClickListener(this);
         MenuItem showGraphButton = menu.getItem(1);
         showGraphButton.setOnMenuItemClickListener(this);
+        MenuItem tariffButton = menu.getItem(2);
+        tariffButton.setOnMenuItemClickListener(this);
         return super.onCreateOptionsMenu(menu);
     }
 
