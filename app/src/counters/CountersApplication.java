@@ -13,6 +13,7 @@ public class CountersApplication extends Application {
     public void onCreate() {
         super.onCreate();
         repository = new Repository(this);
+        Preferences.initialize(this);
     }
 
     public static Repository getRepository() {
