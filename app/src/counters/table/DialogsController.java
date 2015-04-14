@@ -44,7 +44,14 @@ public class DialogsController implements CreateRecordDialog.CloseListener, MyDa
 
     @Override
     public void OnClose(Record record) {
-        if(record != null) {
+        if(record == null) {
+           return;
+        }
+        Record old = this.repository.findRecordByDate(record);
+        if( old != null) {
+            this.repository.updateRecord(old.copyValues(record));
+        }
+        else {
             this.repository.insertRecord(record);
         }
     }

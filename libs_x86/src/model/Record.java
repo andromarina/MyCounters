@@ -105,6 +105,13 @@ public class Record implements Comparable<Record> {
 
     @Override
     public int compareTo(Record another) {
-        return this.date.compareTo(another.getDate());
+        return another.getDate().compareTo(this.date);
+    }
+
+    public Record copyValues(Record input) {
+        this.date = input.date;
+        this.value = input.value;
+        this.categoryId = input.categoryId;
+        return this;
     }
 }

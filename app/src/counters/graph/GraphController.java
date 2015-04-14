@@ -1,6 +1,8 @@
 package counters.graph;
 
 import counters.CountersApplication;
+import counters.Utils;
+import model.Calculator;
 import model.Record;
 import model.Report;
 import counters.database.Repository;
@@ -32,7 +34,10 @@ public class GraphController {
 
     public List<Integer> getDifferenceByCategoryId(int categoryId) {
         ArrayList<Integer> result = new ArrayList<Integer>();
-        for(Record rec : this.repo.getRecordsByCategoryId(categoryId)) {
+        ArrayList<Record> records = this.repo.getRecordsByCategoryId(categoryId);
+        ArrayList<Record> merged = Utils.removeRecordsForTheSameMonth(records);
+        Calculator.recalculateDiff(merged);
+        for(Record rec : merged) {
             result.add(rec.getDiff());
         }
         return result;

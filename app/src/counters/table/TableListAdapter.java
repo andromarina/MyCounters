@@ -11,8 +11,11 @@ import com.example.MyCounters.R;
 import counters.Preferences;
 import counters.categories.CategoriesHelper;
 import counters.database.Repository;
-import model.*;
+import model.CollectionChangedListener;
+import model.PropertyChangedListener;
+import model.Record;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 /**
@@ -71,8 +74,8 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
         unit.setText(Html.fromHtml(CategoriesHelper.getUnits(this.categoryId)));
 
         TextView price = (TextView) item.findViewById(R.id.price);
-        String priceText = String.valueOf(record.getPrice());
-        price.setText(priceText);
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        price.setText(numberFormat.format(record.getPrice()));
         price.setTag(record);
 
         TextView currency = (TextView) item.findViewById(R.id.currency);
@@ -85,8 +88,7 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
     @Override
     public boolean onLongClick(View v) {
         PopupMenu p = new PopupMenu(getContext(), v);
-        p.getMenuInflater().inflate(
-                R.menu.popup_menu, p.getMenu());
+        p.getMenuInflater().inflate(R.menu.popup_menu, p.getMenu());
         p.show();
         final Record rec = (Record) v.getTag();
         p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
