@@ -1,6 +1,7 @@
 package counters.database;
 
 import android.content.Context;
+import counters.Utils;
 import model.*;
 import model.filters.EmptyFilter;
 import model.filters.IFilter;
@@ -168,7 +169,7 @@ public class Repository implements IRepository{
         }
         ArrayList<Record> records = this.helper.getRecordsByCategoryId(id);
         Collections.sort(records);
-      //  records = Utils.removeRecordsForTheSameMonth(records);
+      //  records = Utils.groupRecords(records);
         Calculator.recalculateDiff(records);
         getTariff(id).calc(records);
         recordsCollections.put(id, records);
@@ -189,7 +190,7 @@ public class Repository implements IRepository{
             ArrayList<Record> records = recordsCollections.get(categoryId);
             records.add(record);
             Collections.sort(records);
-          //  records = Utils.removeRecordsForTheSameMonth(records);
+          //  records = Utils.groupRecords(records);
             Calculator.recalculateDiff(records);
             getTariff(record.getCategoryId()).calc(records);
             notifyAllRecordInserted(record);
@@ -201,7 +202,7 @@ public class Repository implements IRepository{
         int catId = record.getCategoryId();
         ArrayList<Record> records = this.getRecordsByCategoryId(catId);
         for(Record rec : records) {
-            if(rec.getDate().compareTo(record.getDate()) == 0) {
+            if(Utils.compareDate(rec.getDate(), record.getDate()) == 0) {
                 return rec;
             }
         }
@@ -228,7 +229,7 @@ public class Repository implements IRepository{
         }
         int result = this.helper.updateRecord(record);
         Collections.sort(records);
-      //  records = Utils.removeRecordsForTheSameMonth(records);
+      //  records = Utils.groupRecords(records);
         Calculator.recalculateDiff(records);
         getTariff(record.getCategoryId()).calc(records);
         return result;

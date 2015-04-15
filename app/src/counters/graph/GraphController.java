@@ -35,7 +35,7 @@ public class GraphController {
     public List<Integer> getDifferenceByCategoryId(int categoryId) {
         ArrayList<Integer> result = new ArrayList<Integer>();
         ArrayList<Record> records = this.repo.getRecordsByCategoryId(categoryId);
-        ArrayList<Record> merged = Utils.removeRecordsForTheSameMonth(records);
+        ArrayList<Record> merged = Utils.groupRecords(records);
         Calculator.recalculateDiff(merged);
         for(Record rec : merged) {
             result.add(rec.getDiff());
