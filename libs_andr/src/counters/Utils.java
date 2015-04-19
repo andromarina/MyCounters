@@ -31,10 +31,11 @@ public class Utils {
         int month = getValueFromCalendar(date, Calendar.MONTH);
         int year = getValueFromCalendar(date, Calendar.YEAR);
         result.add(input.get(0));
-        for(Record record : input) {
+        for(int i = 1; i < input.size(); ++i) {
+            Record record = input.get(i);
             int newMonth = getValueFromCalendar(record.getDate(), Calendar.MONTH);
             int newYear = getValueFromCalendar(record.getDate(), Calendar.YEAR);
-            if(newMonth != month && newYear != year) {
+            if(newMonth != month) {
                 month = newMonth;
                 result.add(record);
             }

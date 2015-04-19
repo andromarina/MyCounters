@@ -74,7 +74,7 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
         unit.setText(Html.fromHtml(CategoriesHelper.getUnits(this.categoryId)));
 
         TextView price = (TextView) item.findViewById(R.id.price);
-        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        DecimalFormat numberFormat = new DecimalFormat("0.00");
         price.setText(numberFormat.format(record.getPrice()));
         price.setTag(record);
 

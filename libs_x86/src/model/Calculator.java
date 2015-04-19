@@ -12,11 +12,11 @@ public class Calculator {
             return;
         }
 
-        for(int i = 0; i < input.size() - 1; ++i) {
+        for(int i = input.size() - 1; i > 0 ; --i) {
             int value1 = input.get(i).getValue();
-            int value2 = input.get(i + 1).getValue();
+            int value2 = input.get(i - 1).getValue();
             int diff = value2 - value1;
-            input.get(i + 1).setDiff(diff);
+            input.get(i - 1).setDiff(diff);
         }
         return;
     }
