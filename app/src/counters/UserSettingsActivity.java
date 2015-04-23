@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.preference.*;
 import com.example.MyCounters.R;
 
-import java.util.ArrayList;
 import java.util.Currency;
+import java.util.List;
 
 /**
  * Created by mara on 3/25/15.
@@ -38,20 +38,17 @@ public class UserSettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.fragment_preference);
             configureCurrenciesPref();
-            configureNotificationsCB();
+           // configureNotificationsCB();
         }
 
         private ListPreference configureCurrenciesPref() {
             ListPreference currencyPreference = (ListPreference) findPreference("currency");
-            ArrayList<Currency> entryValues = new ArrayList<Currency>();
-            entryValues.addAll(Currency.getAvailableCurrencies());
-            String[] entries = new String[entryValues.size()];
-            for(int i = 0; i < entries.length; ++i) {
-                Currency cur = entryValues.get(i);
-                String curName = cur.getCurrencyCode();
+            List< String > currencies = Utils.getAvailableCurrencies();
+            String[] entries = new String[currencies.size()];
+            for(int i = 0; i < currencies.size(); ++i) {
+                String curName = currencies.get(i);
                 entries[i] = curName;
             }
-
             currencyPreference.setEntries(entries);
             currencyPreference.setEntryValues(entries);
             currencyPreference.setDefaultValue(Preferences.getSavedCurrency());

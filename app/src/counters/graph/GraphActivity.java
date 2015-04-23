@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import com.example.MyCounters.R;
 import counters.CountersApplication;
 import counters.categories.CategoriesHelper;
-import model.Category;
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.BarChart;
 import org.achartengine.model.XYMultipleSeriesDataset;

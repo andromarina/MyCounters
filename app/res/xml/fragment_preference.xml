@@ -3,9 +3,9 @@
 
     <!--<PreferenceCategory android:title="@string/notifications">-->
 
-        <CheckBoxPreference
-                android:key="notificationsChBox"
-                android:title="@string/enable_notification"/>
+        <!--<CheckBoxPreference-->
+                <!--android:key="notificationsChBox"-->
+                <!--android:title="@string/enable_notification"/>-->
 
         <ListPreference android:key="currency"
                         android:title="@string/currency">

@@ -2,9 +2,7 @@ package counters;
 
 import model.Record;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by mara on 2/18/15.
@@ -42,6 +40,26 @@ public class Utils {
         }
         return result;
     }
+
+    public static List<String> getAvailableCurrencies() {
+        Locale[] locales = Locale.getAvailableLocales();
+
+        //
+        // We use TreeMap so that the order of the data in the map sorted
+        // based on the country name.
+        //
+        ArrayList< String> currencies = new ArrayList<String>();
+        for (Locale locale : locales) {
+            try {
+                currencies.add(
+                        Currency.getInstance(locale).getCurrencyCode());
+            } catch (Exception e) {
+                // when the locale is not supported
+            }
+        }
+        return currencies;
+    }
+
 
     public static int getValueFromCalendar(Date date, int calendarField) {
         Calendar cal = Calendar.getInstance();
