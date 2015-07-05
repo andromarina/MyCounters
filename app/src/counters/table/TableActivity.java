@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.widget.*;
 import com.example.MyCounters.R;
 import counters.CountersApplication;
+import counters.Preferences;
+import counters.SpinnerController;
+import counters.SpinnerListener;
 import counters.categories.CategoriesHelper;
 import counters.graph.GraphActivity;
 import model.Category;
@@ -80,7 +83,8 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
         SpinnerController spinnerController = new SpinnerController(this);
         ArrayAdapter<String> adapter = spinnerController.createAdapter();
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(spinnerController.getOnItemSelectedListener());
+        spinner.setOnItemSelectedListener(new SpinnerListener());
+        spinner.setSelection(Preferences.getSpinnerPosition());
     }
 
     @Override

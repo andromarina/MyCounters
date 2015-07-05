@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.example.MyCounters.R;
-import counters.Preferences;
 import counters.categories.CategoriesHelper;
 import counters.database.Repository;
 import model.CollectionChangedListener;
@@ -78,9 +77,9 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
         price.setText(numberFormat.format(record.getPrice()));
         price.setTag(record);
 
-        TextView currency = (TextView) item.findViewById(R.id.currency);
-        currency.setText(Preferences.getSavedCurrency().getSymbol());
-        currency.setTag(record);
+    //    TextView currency = (TextView) item.findViewById(R.id.currency);
+//        currency.setText(Preferences.getSavedCurrency().getSymbol());
+//        currency.setTag(record);
         return item;
     }
 

@@ -1,17 +1,23 @@
 package counters.graph;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import com.example.MyCounters.R;
 import counters.CountersApplication;
+import counters.Preferences;
 import counters.categories.CategoriesHelper;
+import counters.SpinnerController;
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.BarChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
@@ -36,6 +42,8 @@ public class GraphActivity extends Activity {
         this.categoriesIds = intent.getIntArrayExtra("categoryID");
         this.graphController = new GraphController(this.categoriesIds);
         drawChart();
+        final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     private XYMultipleSeriesRenderer createMultipleRenderer() {
@@ -45,7 +53,7 @@ public class GraphActivity extends Activity {
         multiRenderer.setZoomEnabled(false,false);
        // multiRenderer.setChartTitle("Income vs Expense Chart");
 
-    //    multiRenderer.setChartTitleTextSize(28);
+    //   multiRenderer.setChartTitleTextSize(28);
         multiRenderer.setAxisTitleTextSize(24);
         multiRenderer.setLabelsTextSize(24);
         multiRenderer.setShowGridY(true);
@@ -61,7 +69,7 @@ public class GraphActivity extends Activity {
         multiRenderer.setYAxisMin(0);
         multiRenderer.setXAxisMin(-1);
         multiRenderer.setBarSpacing(0.5);
-        multiRenderer.setBackgroundColor(Color.TRANSPARENT);
+        multiRenderer.setBarWidth(15.0f);
         multiRenderer.setApplyBackgroundColor(true);
         multiRenderer.setMargins(new int[]{30, 30, 30, 30});
         multiRenderer.setXAxisMax(this.graphController.getMaxMonthIndex());
@@ -93,16 +101,15 @@ public class GraphActivity extends Activity {
         return multiRenderer;
     }
 
-
     private XYSeriesRenderer createBarRenderer(int categoryId) {
 
         XYSeriesRenderer barsRenderer = new XYSeriesRenderer();
         barsRenderer.setColor(CategoriesHelper.getColor(categoryId));
         barsRenderer.setFillPoints(true);
-        barsRenderer.setLineWidth(2);
         barsRenderer.setDisplayChartValues(true);
         barsRenderer.setDisplayChartValuesDistance(10);
         barsRenderer.setChartValuesTextSize(24);
+        barsRenderer.setPointStrokeWidth(10.0f);
 
         return barsRenderer;
     }
@@ -135,4 +142,25 @@ public class GraphActivity extends Activity {
         View chart = ChartFactory.getBarChartView(this, dataset, multiRenderer, BarChart.Type.DEFAULT);
         chartContainer.addView(chart);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.graph_activity_menu, menu);
+        MenuItem item = menu.findItem(R.id.spinner);
+        Spinner spinner = (Spinner) item.getActionView();
+        SpinnerController spinnerController = new SpinnerController(getActionBar().getThemedContext());
+        ArrayAdapter<String> adapter = spinnerController.createAdapter();
+        spinner.setAdapter(adapter);
+        spinner.setSelection(Preferences.getSpinnerPosition());
+        spinner.setOnItemSelectedListener(new SpinnerListenerForGraphActivity() {
+            @Override
+            public void notifyItemSelected() {
+                //to redraw graph activity properly
+                //probably this is hack ;)
+                onCreate(null);
+            }
+        });
+        return true;
+    }
+
 }

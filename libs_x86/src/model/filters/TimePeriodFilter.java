@@ -28,4 +28,8 @@ public class TimePeriodFilter implements IFilter {
 
         return false;
     }
+
+    public int getMonthsBefore() {
+        return this.monthsBefore;
+    }
 }

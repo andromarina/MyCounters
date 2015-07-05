@@ -28,7 +28,7 @@
         <activity
                 android:name="counters.graph.GraphActivity"
                 android:parentActivityName="counters.categories.MainActivity"
-                android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+                android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="counters.categories.MainActivity"/>
