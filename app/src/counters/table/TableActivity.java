@@ -38,6 +38,12 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
         configureSpinner();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configureSpinner();
+    }
+
     private void initializeViews() {
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(createListAdapter());
