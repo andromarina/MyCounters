@@ -21,4 +21,6 @@
     <string name="enable_notification">Enable Notification</string>
     <string name="notifications">Notifications</string>
     <string name="currency">Currency</string>
+    <string name="notification_title">My Counters reminder</string>
+    <string name="notification_text">Don\'t forget to add counters values</string>
 </resources>

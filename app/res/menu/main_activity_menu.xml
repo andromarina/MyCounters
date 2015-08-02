@@ -6,7 +6,7 @@
             android:showAsAction="always"
             android:title="@string/show_graph">
     </item>
-    <item android:id="@+id/preferences"
-          android:title="Preferences">
-    </item>
+    <!--<item android:id="@+id/preferences"-->
+    <!--android:title="Preferences">-->
+    <!--</item>-->
 </menu>

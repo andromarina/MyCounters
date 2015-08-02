@@ -2,6 +2,8 @@ package counters.graph;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -16,8 +18,8 @@ import android.widget.Spinner;
 import com.example.MyCounters.R;
 import counters.CountersApplication;
 import counters.Preferences;
-import counters.categories.CategoriesHelper;
 import counters.SpinnerController;
+import counters.categories.CategoriesHelper;
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.BarChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
@@ -44,6 +46,13 @@ public class GraphActivity extends Activity {
         drawChart();
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancelAll();
     }
 
     private XYMultipleSeriesRenderer createMultipleRenderer() {

@@ -1,6 +1,8 @@
 package counters.table;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -42,6 +44,8 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
     protected void onResume() {
         super.onResume();
         configureSpinner();
+        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancelAll();
     }
 
     private void initializeViews() {

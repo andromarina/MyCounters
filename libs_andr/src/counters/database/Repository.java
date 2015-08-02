@@ -1,6 +1,7 @@
 package counters.database;
 
 import android.content.Context;
+import counters.Preferences;
 import counters.Utils;
 import model.*;
 import model.filters.EmptyFilter;
@@ -193,6 +194,7 @@ public class Repository implements IRepository{
           //  records = Utils.groupRecords(records);
             Calculator.recalculateDiff(records);
             getTariff(record.getCategoryId()).calc(records);
+            Preferences.saveLastRecordDate(record.getDate());
             notifyAllRecordInserted(record);
         }
         return result;

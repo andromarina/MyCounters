@@ -1,6 +1,8 @@
 package counters.categories;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import com.example.MyCounters.R;
 import counters.CountersApplication;
-import counters.UserSettingsActivity;
 import counters.graph.GraphActivity;
 import counters.table.TableActivity;
 
@@ -34,6 +35,13 @@ public class MainActivity extends Activity implements CategoryClickListener,Menu
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancelAll();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         MenuItem showGraphButton = menu.getItem(0);
@@ -41,19 +49,19 @@ public class MainActivity extends Activity implements CategoryClickListener,Menu
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case R.id.preferences:
-                Intent i = new Intent(this, UserSettingsActivity.class);
-                startActivity(i);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item)
+//    {
+//        switch(item.getItemId())
+//        {
+//            case R.id.preferences:
+//                Intent i = new Intent(this, UserSettingsActivity.class);
+//                startActivity(i);
+//                return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {

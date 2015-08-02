@@ -14,6 +14,8 @@ public class CountersApplication extends Application {
         super.onCreate();
         repository = new Repository(this);
         Preferences.initialize(this);
+//        Intent intent = new Intent(this, StarterService.class);
+//        this.startService(intent);
     }
 
     public static Repository getRepository() {

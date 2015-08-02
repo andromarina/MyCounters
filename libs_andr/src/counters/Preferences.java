@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -17,6 +18,7 @@ public class Preferences {
     public static final String CURRENCY = "currency";
     public static final String NOTIFICATIONS = "notificationsChBox";
     public static final String SPINNER_POSITION = "months";
+    public static final String LAST_DATE = "lastDate";
 
     public static void initialize(Context context) {
         Preferences.context = context;
@@ -38,6 +40,22 @@ public class Preferences {
             return Currency.getInstance(Locale.getDefault());
         }
         return Currency.getInstance(savedCode);
+    }
+
+    public static void saveLastRecordDate(java.util.Date date) {
+        sPref = context.getSharedPreferences(LAST_DATE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putLong(LAST_DATE, date.getTime());
+        ed.commit();
+        Log.d(LOG_TAG, date.getTime() + " Date saved");
+    }
+
+    public static java.util.Date getLastRecordDate() {
+        sPref = context.getSharedPreferences(LAST_DATE, Context.MODE_PRIVATE);
+        long dateMs = sPref.getLong(LAST_DATE, System.currentTimeMillis());
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateMs);
+        return calendar.getTime();
     }
 
     public static void saveSpinnerPosition(int spinnerPosition) {

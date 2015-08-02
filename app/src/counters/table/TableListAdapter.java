@@ -45,6 +45,8 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
         }
         if(position % 2 == 0) {
             item.setBackgroundColor(CategoriesHelper.getColorLight(this.categoryId));
+        } else {
+            item.setBackgroundColor(android.R.color.background_light);
         }
         final Record record = super.getItem(position);
         item.setOnLongClickListener(this);
@@ -75,6 +77,7 @@ public class TableListAdapter extends ArrayAdapter<Record> implements View.OnLon
         TextView price = (TextView) item.findViewById(R.id.price);
         DecimalFormat numberFormat = new DecimalFormat("0.00");
         price.setText(numberFormat.format(record.getPrice()));
+        price.setOnLongClickListener(this);
         price.setTag(record);
 
     //    TextView currency = (TextView) item.findViewById(R.id.currency);
