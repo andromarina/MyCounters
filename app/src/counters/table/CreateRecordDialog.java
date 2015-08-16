@@ -4,21 +4,32 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.InputType;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.MyCounters.R;
 import model.Record;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by mara on 1/12/15.
  */
-public class CreateRecordDialog {
+public class CreateRecordDialog implements DatePicker.OnDateChangedListener {
     private AlertDialog.Builder builder;
     private int categoryId;
     private CloseListener closeListener;
     private Context context;
+    private Date pickerDate = Calendar.getInstance().getTime();
+
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, monthOfYear, dayOfMonth);
+        this.pickerDate.setTime(cal.getTimeInMillis());
+    }
 
     public interface CloseListener {
         public void OnClose(Record record);
@@ -37,13 +48,26 @@ public class CreateRecordDialog {
     private AlertDialog.Builder create() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.meters);
+        builder.setTitle(R.string.create_record);
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText input = new EditText(context);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        builder.setView(input);
+        DatePicker date = new DatePicker(context);
+        date.setCalendarViewShown(false);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        date.init(year, month, day, this);
+        layout.addView(date);
 
-        builder.setPositiveButton("OK", new OnOKListener(input));
+        EditText recordValue = new EditText(context);
+        recordValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+        recordValue.setHint(R.string.record_value);
+        layout.addView(recordValue);
+        layout.setPadding(30, 0, 30, 25);
+
+        builder.setView(layout);
+        builder.setPositiveButton("OK", new OnOKListener(recordValue));
         builder.setNegativeButton("Cancel", new OnCancelListener());
         return builder;
     }
@@ -66,15 +90,18 @@ public class CreateRecordDialog {
 
 
     private class OnOKListener implements DialogInterface.OnClickListener {
-        private EditText input;
+        private EditText recordValue;
 
-        public OnOKListener(EditText input) {
-            this.input = input;
+        public OnOKListener(EditText recordValue) {
+            this.recordValue = recordValue;
         }
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            String value = input.getText().toString();
+            String value = recordValue.getText().toString();
             Record result = createRecord(value.replaceAll("\\s", ""), categoryId);
+            if (result != null) {
+                result.setDate(pickerDate);
+            }
             closeListener.OnClose(result);
         }
     }

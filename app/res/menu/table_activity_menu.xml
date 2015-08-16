@@ -4,7 +4,7 @@
             android:id="@+id/add_row_button"
             android:icon="@drawable/ic_menu_add"
             android:showAsAction="always"
-            android:title="@string/insert_record">
+            android:title="@string/create_record">
     </item>
 
     <item
