@@ -76,9 +76,8 @@ public class GraphActivity extends Activity {
         multiRenderer.setTextTypeface("sans_serif", Typeface.NORMAL);
         multiRenderer.setYLabels(10);
         multiRenderer.setYAxisMin(0);
-        multiRenderer.setXAxisMin(-1);
-        multiRenderer.setBarSpacing(0.5);
-        multiRenderer.setBarWidth(15.0f);
+        multiRenderer.setBarSpacing(0.7);
+        multiRenderer.setBarWidth(17.0f);
         multiRenderer.setApplyBackgroundColor(true);
         multiRenderer.setMargins(new int[]{30, 30, 30, 30});
         multiRenderer.setXAxisMax(this.graphController.getMaxMonthIndex());

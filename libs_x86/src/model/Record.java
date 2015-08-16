@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Record implements Comparable<Record> {
 
-    private int id;
+    private long id;
     private Date date;
     private int categoryId;
     private int value;
@@ -18,14 +18,14 @@ public class Record implements Comparable<Record> {
     private double price = 0.0;
     private ArrayList<PropertyChangedListener> listeners = new ArrayList<PropertyChangedListener>();
 
-    public Record(int id, Date date, int value, int categoryId) {
+    public Record(long id, Date date, int value, int categoryId) {
         this.id = id;
         this.date = date;
         this.value = value;
         this.categoryId = categoryId;
     }
 
-    public Record(int id, long date, int value, int categoryId) {
+    public Record(long id, long date, int value, int categoryId) {
         this.id = id;
         this.date = new Date(date);
         this.value = value;
@@ -42,7 +42,7 @@ public class Record implements Comparable<Record> {
         this.listeners.add(listener);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -51,6 +51,10 @@ public class Record implements Comparable<Record> {
             return true;
         }
         return false;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Date getDate() {
@@ -103,6 +107,16 @@ public class Record implements Comparable<Record> {
         }
     }
 
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Record id: " + id);
+        builder.append(", Value: " + value);
+        builder.append(", Date: " + date.toString());
+        builder.append(", Category: " + categoryId);
+        final String result = builder.toString();
+        return result;
+    }
+
     @Override
     public int compareTo(Record another) {
         return another.getDate().compareTo(this.date);
@@ -112,6 +126,7 @@ public class Record implements Comparable<Record> {
         this.date = input.date;
         this.value = input.value;
         this.categoryId = input.categoryId;
+        //this.id = input.id;
         return this;
     }
 }

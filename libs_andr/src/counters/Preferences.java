@@ -43,11 +43,11 @@ public class Preferences {
     }
 
     public static void saveLastRecordDate(java.util.Date date) {
-        sPref = context.getSharedPreferences(LAST_DATE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putLong(LAST_DATE, date.getTime());
-        ed.commit();
-        Log.d(LOG_TAG, date.getTime() + " Date saved");
+//        sPref = context.getSharedPreferences(LAST_DATE, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor ed = sPref.edit();
+//        ed.putLong(LAST_DATE, date.getTime());
+//        ed.commit();
+//        Log.d(LOG_TAG, date.getTime() + " Date saved");
     }
 
     public static java.util.Date getLastRecordDate() {

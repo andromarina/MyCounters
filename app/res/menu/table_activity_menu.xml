@@ -8,16 +8,17 @@
     </item>
 
     <item
+            android:id="@+id/tariff_button"
+            android:icon="@drawable/ic_coin"
+            android:showAsAction="always"
+            android:title="@string/add_tariff">
+    </item>
+
+    <item
             android:id="@+id/show_graph_button"
             android:icon="@drawable/ic_graph"
             android:showAsAction="always"
             android:title="@string/show_graph">
     </item>
 
-    <item
-            android:id="@+id/tariff_button"
-            android:icon="@drawable/ic_coin"
-            android:showAsAction="always"
-            android:title="@string/add_tariff">
-    </item>
 </menu>

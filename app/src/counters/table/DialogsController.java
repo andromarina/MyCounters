@@ -2,14 +2,14 @@ package counters.table;
 
 import android.content.Context;
 import android.util.Log;
-import model.Record;
 import counters.database.Repository;
+import model.Record;
 import model.Tariff;
 
 /**
  * Created by mara on 2/8/15.
  */
-public class DialogsController implements CreateRecordDialog.CloseListener, MyDataPickerDialog.DateChangedListener,
+public class DialogsController implements CreateRecordDialog.CloseListener, MyDatePickerDialog.DateChangedListener,
         UpdateTariffDialog.CloseListener
 {
     private Context context;
@@ -29,7 +29,7 @@ public class DialogsController implements CreateRecordDialog.CloseListener, MyDa
     }
 
     public void showDatePickerDialog(Record record) {
-        MyDataPickerDialog dialog = new MyDataPickerDialog(this.context, record);
+        MyDatePickerDialog dialog = new MyDatePickerDialog(this.context, record);
         dialog.setDateChangedListener(this);
         dialog.show();
     }

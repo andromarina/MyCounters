@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import model.Category;
 import model.Record;
 import model.TariffRange;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  */
 public class RepositoryHelper {
     private SQLiteDatabase db;
+    public static final String LOG_TAG = RepositoryHelper.class.getSimpleName();
 
     public RepositoryHelper(Context context) {
         DataBaseHelper helper = new DataBaseHelper(context);
@@ -55,7 +57,7 @@ public class RepositoryHelper {
         cv.put(Contracts.Records.COLUMN_VALUE, record.getValue());
         String selection = Contracts.Records._ID + " LIKE ?";
         String[] selectionArgs = { String.valueOf(record.getId()) };
-
+        Log.d(LOG_TAG, "Update record: " + record.toString());
         return db.update(Contracts.Records.TABLE_NAME,cv,selection,selectionArgs);
     }
 
@@ -66,7 +68,10 @@ public class RepositoryHelper {
             cv.put(Contracts.Records.COLUMN_VALUE, record.getValue());
             cv.put(Contracts.Records.COLUMN_CATEGORY_ID, record.getCategoryId());
             cv.put(Contracts.Records.COLUMN_APARTMENT_ID, record.getApartmentId());
-            return db.insertOrThrow(Contracts.Records.TABLE_NAME, null, cv);
+            final long recordId = db.insertOrThrow(Contracts.Records.TABLE_NAME, null, cv);
+            record.setId(recordId);
+            Log.d(LOG_TAG, "Insert record: " + record.toString());
+            return recordId;
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -77,6 +82,7 @@ public class RepositoryHelper {
 
     public int deleteRecord(Record record) {
         try {
+            Log.d(LOG_TAG, "Delete record: " + record.toString());
             String where = Contracts.Records._ID + "=" + record.getId();
             return db.delete(Contracts.Records.TABLE_NAME, where, null);
         }
@@ -174,6 +180,7 @@ public class RepositoryHelper {
             records.add(record);
         }
         c.close();
+        Log.d(LOG_TAG, "Loaded " + records.size() + " for category " + categoryId);
         return records;
     }
 }

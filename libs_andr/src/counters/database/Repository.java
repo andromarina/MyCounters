@@ -24,7 +24,7 @@ public class Repository implements IRepository{
     public Repository(Context context) {
         this.helper = new RepositoryHelper(context);
         this.filter = new EmptyFilter();
-      //  insertAllRecords();
+//        insertAllRecords();
     }
 
     private void insertAllRecords() {
@@ -44,6 +44,11 @@ public class Repository implements IRepository{
         list.add(new Record(convertToMsec("12/5/2014"), 75, 2)); // water
         list.add(new Record(convertToMsec("1/5/2015"), 84, 2)); // water
         list.add(new Record(convertToMsec("2/7/2015"), 91, 2)); // water
+        list.add(new Record(convertToMsec("3/5/2015"), 96, 2));
+        list.add(new Record(convertToMsec("4/5/2015"), 103, 2));
+        list.add(new Record(convertToMsec("5/7/2015"), 110, 2));
+        list.add(new Record(convertToMsec("6/14/2015"), 110, 2));
+        list.add(new Record(convertToMsec("7/6/2015"), 122, 2));
 
         list.add(new Record(convertToMsec("1/5/2014"), 318, 3)); // gas
         list.add(new Record(convertToMsec("2/5/2014"), 336, 3)); // gas
@@ -59,6 +64,11 @@ public class Repository implements IRepository{
         list.add(new Record(convertToMsec("12/5/2014"), 503, 3)); // gas
         list.add(new Record(convertToMsec("1/5/2015"), 530, 3)); // gas
         list.add(new Record(convertToMsec("2/7/2015"), 549, 3)); // gas
+        list.add(new Record(convertToMsec("3/5/2015"), 566, 3));
+        list.add(new Record(convertToMsec("4/5/2015"), 589, 3));
+        list.add(new Record(convertToMsec("5/7/2015"), 608, 3));
+        list.add(new Record(convertToMsec("6/14/2015"), 631, 3));
+        list.add(new Record(convertToMsec("7/6/2015"), 641, 3));
 
         list.add(new Record(convertToMsec("1/5/2014"), 3251, 1)); // elect
         list.add(new Record(convertToMsec("2/5/2014"), 3296, 1)); // elect
@@ -74,6 +84,11 @@ public class Repository implements IRepository{
         list.add(new Record(convertToMsec("12/5/2014"), 3727, 1)); // elect
         list.add(new Record(convertToMsec("1/5/2015"), 3791, 1)); // elect
         list.add(new Record(convertToMsec("2/7/2015"), 3846, 1)); // elect
+        list.add(new Record(convertToMsec("3/5/2015"), 3891, 1));
+        list.add(new Record(convertToMsec("4/5/2015"), 3942, 1));
+        list.add(new Record(convertToMsec("5/7/2015"), 3993, 1));
+        list.add(new Record(convertToMsec("6/14/2015"), 4049, 1));
+        list.add(new Record(convertToMsec("7/6/2015"), 4080, 1));
 
         for(Record rec : list) {
             insertRecord(rec);
@@ -211,16 +226,21 @@ public class Repository implements IRepository{
         return null;
     }
 
-    public int deleteRecord(Record record) {
-        int result = this.helper.deleteRecord(record);
-        if (result >= 0) {
-            ArrayList<Record> records = recordsCollections.get(record.getCategoryId());
-            records.remove(record);
-            Collections.sort(records);
-            Calculator.recalculateDiff(records);
-            notifyAllRecordDeleted(record);
+    public void deleteRecord(Record record) {
+        Record recordWithSameDate = findRecordByDate(record);
+        delete(record);
+        if (recordWithSameDate != null) {
+            delete(recordWithSameDate);
         }
-        return result;
+    }
+
+    private void delete(Record record) {
+        this.helper.deleteRecord(record);
+        ArrayList<Record> records = recordsCollections.get(record.getCategoryId());
+        records.remove(record);
+        Collections.sort(records);
+        Calculator.recalculateDiff(records);
+        notifyAllRecordDeleted(record);
     }
 
     public int updateRecord(Record record) {
@@ -230,6 +250,7 @@ public class Repository implements IRepository{
             throw new RuntimeException("Trying to update not existing record!");
         }
         int result = this.helper.updateRecord(record);
+
         Collections.sort(records);
       //  records = Utils.groupRecords(records);
         Calculator.recalculateDiff(records);
@@ -245,7 +266,7 @@ public class Repository implements IRepository{
         return this.helper.getCategoryById(id);
     }
 
-    public Record getRecordById(int recordId, int categoryId) {
+    public Record getRecordById(long recordId, int categoryId) {
         ArrayList<Record> records = this.recordsCollections.get(categoryId);
         for(Record record : records) {
             if(record.getId() == recordId) {

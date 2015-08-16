@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Counters</string>
+    <string name="app_name">CountersChart</string>
     <string name="electricity">Electricity</string>
     <string name="date">Date</string>
     <string name="value">Value</string>

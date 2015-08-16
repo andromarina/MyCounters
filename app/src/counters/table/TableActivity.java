@@ -32,7 +32,7 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.table);
         Intent intent = getIntent();
-        this.categoryId = intent.getIntExtra("categoryID", 0);
+        this.categoryId = intent.getIntExtra("categoryID", 1);
         this.categoryColour = CategoriesHelper.getColor(this.categoryId);
         this.controller = new DialogsController(this, CountersApplication.getRepository(),this.categoryId);
         configureActionBar();
@@ -49,6 +49,7 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
     }
 
     private void initializeViews() {
+        ImageView iv = (ImageView) findViewById(R.id.imageView);
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(createListAdapter());
         TextView dateHeader = (TextView) findViewById(R.id.date_header);
@@ -66,10 +67,10 @@ public class TableActivity extends Activity implements MenuItem.OnMenuItemClickL
         getMenuInflater().inflate(R.menu.table_activity_menu, menu);
         MenuItem addRowButton = menu.getItem(0);
         addRowButton.setOnMenuItemClickListener(this);
-        MenuItem showGraphButton = menu.getItem(1);
-        showGraphButton.setOnMenuItemClickListener(this);
-        MenuItem tariffButton = menu.getItem(2);
+        MenuItem tariffButton = menu.getItem(1);
         tariffButton.setOnMenuItemClickListener(this);
+        MenuItem showGraphButton = menu.getItem(2);
+        showGraphButton.setOnMenuItemClickListener(this);
         return super.onCreateOptionsMenu(menu);
     }
 

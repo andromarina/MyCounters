@@ -2,10 +2,10 @@ package counters.graph;
 
 import counters.CountersApplication;
 import counters.Utils;
+import counters.database.Repository;
 import model.Calculator;
 import model.Record;
 import model.Report;
-import counters.database.Repository;
 
 import java.util.*;
 
@@ -40,6 +40,7 @@ public class GraphController {
         for(Record rec : merged) {
             result.add(rec.getDiff());
         }
+        Collections.reverse(result);
         return result;
     }
 
@@ -58,6 +59,7 @@ public class GraphController {
 
            result.add(month);
        }
+       Collections.reverse(result);
        return result;
    }
 }

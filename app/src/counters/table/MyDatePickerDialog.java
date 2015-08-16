@@ -14,13 +14,13 @@ import java.util.Date;
 /**
  * Created by mara on 2/1/15.
  */
-public class MyDataPickerDialog implements DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
+public class MyDatePickerDialog implements DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
     private DatePickerDialog datePickerDialog;
     private Record record;
     private DateChangedListener listener;
     private boolean isDoneClicked = false;
 
-    public MyDataPickerDialog(Context context, Record record) {
+    public MyDatePickerDialog(Context context, Record record) {
         this.record = new Record(record.getId(), record.getDate(), record.getValue(),
                 record.getCategoryId());
         create(context);
