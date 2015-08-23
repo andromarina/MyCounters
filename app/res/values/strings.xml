@@ -17,7 +17,7 @@
     <string name="all_records">All records</string>
     <string name="select_period">Select period to display</string>
     <string name="not_enough_records">Please, add more records to build the graph</string>
-    <string name="not_valid_value">Not valid value. Should contain only numbers</string>
+    <string name="not_valid_value">Not valid record value.</string>
     <string name="enable_notification">Enable Notification</string>
     <string name="notifications">Notifications</string>
     <string name="currency">Currency</string>

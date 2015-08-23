@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import counters.CountersApplication;
 import counters.Preferences;
 import counters.SpinnerController;
@@ -77,18 +77,18 @@ public class GraphActivity extends Activity {
         multiRenderer.setYLabels(10);
         multiRenderer.setYAxisMin(0);
         multiRenderer.setBarSpacing(0.7);
-        multiRenderer.setBarWidth(17.0f);
+        multiRenderer.setBarWidth(30.0f);
         multiRenderer.setApplyBackgroundColor(true);
         multiRenderer.setMargins(new int[]{30, 30, 30, 30});
         multiRenderer.setXAxisMax(this.graphController.getMaxMonthIndex());
         multiRenderer.setYAxisMax(this.graphController.getMaxDiff() + 5);
 
         List<String> monthsNames = this.graphController.getMonthsNames();
-        multiRenderer.setPanEnabled(false, false);
+        multiRenderer.setPanEnabled(true, false);
 
         if(monthsNames.size() > 12) {
-            multiRenderer.setPanEnabled(true, false);
             multiRenderer.setXAxisMax(12);
+            multiRenderer.setBarWidth(17.0f);
         }
 
         // multiRenderer.setXTitle("Year 2014");

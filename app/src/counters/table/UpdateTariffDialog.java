@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import model.Tariff;
 import model.TariffRange;
 

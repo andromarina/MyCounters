@@ -3,7 +3,7 @@ package counters;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.*;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 
 import java.util.Currency;
 import java.util.List;

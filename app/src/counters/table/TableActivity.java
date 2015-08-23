@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import counters.CountersApplication;
 import counters.Preferences;
 import counters.SpinnerController;

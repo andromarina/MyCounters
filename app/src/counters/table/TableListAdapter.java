@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import counters.categories.CategoriesHelper;
 import counters.database.Repository;
 import model.CollectionChangedListener;

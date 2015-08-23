@@ -1,9 +1,7 @@
 package counters.categories;
 
 import android.graphics.Color;
-import com.example.MyCounters.R;
-
-import java.util.HashMap;
+import com.counters.chart.R;
 
 /**
  * Created by mara on 4/4/15.

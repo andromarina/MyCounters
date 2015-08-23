@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.DatePicker;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import model.Record;
 
 import java.util.Calendar;

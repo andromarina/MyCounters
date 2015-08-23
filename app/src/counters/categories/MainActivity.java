@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import counters.CountersApplication;
 import counters.graph.GraphActivity;
 import counters.table.TableActivity;

@@ -8,7 +8,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import model.Record;
 
 import java.util.Calendar;
@@ -52,6 +52,12 @@ public class CreateRecordDialog implements DatePicker.OnDateChangedListener {
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
 
+        EditText recordValue = new EditText(context);
+        recordValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+        recordValue.setHint(R.string.record_value);
+        layout.addView(recordValue);
+        layout.setPadding(30, 0, 30, 25);
+
         DatePicker date = new DatePicker(context);
         date.setCalendarViewShown(false);
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -60,15 +66,10 @@ public class CreateRecordDialog implements DatePicker.OnDateChangedListener {
         date.init(year, month, day, this);
         layout.addView(date);
 
-        EditText recordValue = new EditText(context);
-        recordValue.setInputType(InputType.TYPE_CLASS_NUMBER);
-        recordValue.setHint(R.string.record_value);
-        layout.addView(recordValue);
-        layout.setPadding(30, 0, 30, 25);
-
         builder.setView(layout);
         builder.setPositiveButton("OK", new OnOKListener(recordValue));
         builder.setNegativeButton("Cancel", new OnCancelListener());
+        builder.create();
         return builder;
     }
 

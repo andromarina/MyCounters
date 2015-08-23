@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.MyCounters.R;
+import com.counters.chart.R;
 import model.Category;
 
 import java.util.List;
